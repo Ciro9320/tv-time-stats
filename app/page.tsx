@@ -142,12 +142,12 @@ export default async function Home() {
                                         </td>
                                         <td className="px-6 py-4 text-zinc-600 dark:text-zinc-400">
                                             {Number(
-                                                row["Total Average Episodes"],
+                                                row["Real Average Episodes"],
                                             ).toFixed(1)}
                                         </td>
                                         <td className="px-6 py-4 text-zinc-600 dark:text-zinc-400">
                                             {Number(
-                                                row["Total Average Hours"],
+                                                row["Real Average Hours"],
                                             ).toFixed(1)}
                                         </td>
                                         <td className="px-6 py-4 text-zinc-600 dark:text-zinc-400">
