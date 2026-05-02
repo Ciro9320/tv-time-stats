@@ -2,6 +2,8 @@ import pool from "@/lib/db";
 import Header from "@/components/Header";
 import Section from "@/components/Section";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
     const [all_time_stats_result] = await pool.query(
         "SELECT * FROM stats_all_time_view",
