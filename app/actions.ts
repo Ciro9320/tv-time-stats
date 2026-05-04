@@ -40,3 +40,25 @@ export async function insertRecordAction(formData: FormData) {
 
     redirect("/records");
 }
+
+export async function updateRecordAction(formData: FormData) {
+    const id = Number(formData.get("id"));
+    const episodes = Number(formData.get("episodes"));
+    const hours = Number(formData.get("hours"));
+    const generated = formData.get("generated") === "1";
+
+    try {
+        await pool.query(
+            "UPDATE stats SET episodes = ? , hours = ?, generated = ? WHERE id = ?",
+            [episodes, hours, generated, id],
+        );
+    } catch (error) {
+        console.error("Error during the updating of the record:", error);
+
+        return { error: "Failed to update record." };
+    }
+
+    revalidatePath("/records");
+
+    redirect("/records");
+}
