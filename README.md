@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TV Time Stats
 
-## Getting Started
+A personal web application built to analyze and visualize my personal TV viewing statistics. This project was created specifically to run as a containerized app on my personal NAS powered by [ZimaOS](https://www.zimaspace.com/zimaos).
 
-First, run the development server:
+## 🚀 Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+TV Time Stats connects to an external MySQL database containing my viewing history to generate insights such as:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Total episodes and hours watched.
+- Monthly and annual averages.
+- Personal viewing records (e.g., maximum episodes watched in a single month).
+- Year-by-year breakdown of viewing habits.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+_Note: The database itself is not provided in this repository, as it is populated and hosted in a separate container on my ZimaOS NAS._
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Tech Stack
 
-## Learn More
+- **Framework:** [Next.js 16](https://nextjs.org/) (App Router)
+- **Language:** TypeScript
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Charts:** [Recharts](https://recharts.org/) & [shadcn/ui](https://ui.shadcn.com/)
+- **Database:** MySQL (via `mysql2` connector)
+- **Deployment:** Docker (multi-stage build optimized for production)
 
-To learn more about Next.js, take a look at the following resources:
+## 📦 Installation on ZimaOS
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Because this app was designed exclusively for ZimaOS, it is fully containerized. Here is how to install and configure it on your NAS.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Prerequisites
 
-## Deploy on Vercel
+- A running instance of ZimaOS.
+- An existing MySQL/MariaDB container running on the NAS with the database `tv-time-stats` created and populated with your data. The database must include the expected views (like `stats_all_time_view` and `stats_by_year_view`).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ZimaOS Web UI (Custom App)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Click the **+** button in the top left and select **Install a customized app**.
+2. Configure the app:
+    - **Image:** `ghcr.io/ciro9320/tv-time-stats:latest`
+    - **App Name:** TV Time Stats
+    - **Icon:** _(Optional URL to an icon)_
+    - **Web UI:** Port `3000`
+    - **Port Map:** `3000` (Host) -> `3000` (Container)
+3. Add the following **Environment Variables** (matching your MySQL setup):
+    - `MYSQL_HOST`: your database host
+    - `MYSQL_USER`: your database user
+    - `MYSQL_PASSWORD`: your database password
+    - `MYSQL_DATABASE`: your database name
+4. Click **Install/Save**. The app will now appear on your ZimaOS dashboard.
+
+## 💻 Local Development
+
+If you wish to modify the application locally before deploying to the NAS:
+
+1. Clone the repository and install dependencies:
+    ```bash
+    npm install
+    ```
+2. Create a `.env` file in the root directory and add your database credentials:
+    ```env
+    MYSQL_HOST=localhost
+    MYSQL_USER=root
+    MYSQL_PASSWORD=secret
+    MYSQL_DATABASE=tv-time-stats
+    ```
+3. Run the development server:
+    ```bash
+    npm run dev
+    ```
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
