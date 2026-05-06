@@ -69,7 +69,7 @@ export default function MonthlyEpisodesChart({
         <ChartContainer config={dynamicConfig} className="h-full w-full">
             <BarChart
                 data={data}
-                margin={{ top: 20, right: 10, bottom: 0, left: 10 }}
+                margin={{ top: 0, right: 0, bottom: 0, left: -20 }}
             >
                 <CartesianGrid
                     strokeDasharray="3 3"
@@ -110,7 +110,6 @@ export default function MonthlyEpisodesChart({
 
                 <Legend
                     verticalAlign="top"
-                    height={36}
                     iconType="circle"
                     onClick={handleLegendClick}
                     formatter={renderLegendText}

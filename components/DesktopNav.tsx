@@ -23,7 +23,7 @@ export default function DesktopNav({ links }: NavProps) {
         : "/" + pathSegments.slice(0, -1).join("/");
 
     return (
-        <div className="hidden md:flex sticky top-4 z-50 w-full justify-center mt-4 px-4 sm:px-6 lg:px-8">
+        <div className="hidden md:flex sticky top-4 z-50 w-full justify-center mt-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <nav className="pointer-events-auto relative flex flex-row justify-center items-center w-full">
                 <div className="absolute left-0">
                     {isSubPage && (

@@ -44,7 +44,7 @@ export default function ReliabilityChart({
 
     return (
         <ChartContainer config={chartConfig} className="h-full w-full">
-            <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+            <PieChart margin={{ top: 0, right: 0, bottom: 0, left: -20 }}>
                 <ChartTooltip
                     cursor={false}
                     content={<ChartTooltipContent hideLabel />}
@@ -72,15 +72,15 @@ export default function ReliabilityChart({
                                         dominantBaseline="middle"
                                     >
                                         <tspan
-                                            x={viewBox.cx}
+                                            x={viewBox.cx - 10}
                                             y={viewBox.cy}
                                             className="fill-zinc-900 text-3xl font-bold dark:fill-zinc-100"
                                         >
                                             {totalHours}
                                         </tspan>
                                         <tspan
-                                            x={viewBox.cx}
-                                            y={viewBox.cy + 20}
+                                            x={viewBox.cx - 10}
+                                            y={viewBox.cy + 24}
                                             className="fill-zinc-500 text-sm dark:fill-zinc-400"
                                         >
                                             Total Hours
@@ -91,7 +91,7 @@ export default function ReliabilityChart({
                         }}
                     />
                 </Pie>
-                <Legend verticalAlign="bottom" iconType="circle" />
+                <Legend verticalAlign="top" iconType="circle" />
             </PieChart>
         </ChartContainer>
     );

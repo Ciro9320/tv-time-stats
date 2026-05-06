@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis, Legend, YAxis } from "recharts";
 import {
     ChartConfig,
@@ -26,6 +27,8 @@ type AnnualData = {
 };
 
 export default function AnnualSummaryChart({ data }: { data: AnnualData[] }) {
+    const [hiddenSeries, setHiddenSeries] = useState<string[]>([]);
+
     if (!data || data.length === 0) {
         return (
             <div className="flex h-full items-center justify-center text-sm text-zinc-500">
@@ -34,11 +37,31 @@ export default function AnnualSummaryChart({ data }: { data: AnnualData[] }) {
         );
     }
 
+    const handleLegendClick = (e: any) => {
+        const keyClicked = e.dataKey;
+        if (hiddenSeries.includes(keyClicked)) {
+            setHiddenSeries(hiddenSeries.filter((k) => k !== keyClicked));
+        } else {
+            setHiddenSeries([...hiddenSeries, keyClicked]);
+        }
+    };
+
+    const renderLegendText = (value: string, entry: any) => {
+        const isHidden = hiddenSeries.includes(entry.dataKey);
+        return (
+            <span
+                className={`transition-all ${isHidden ? "text-zinc-400 line-through dark:text-zinc-600" : "text-zinc-700 dark:text-zinc-300"}`}
+            >
+                {value}
+            </span>
+        );
+    };
+
     return (
         <ChartContainer config={chartConfig} className="h-full w-full">
             <BarChart
                 data={data}
-                margin={{ top: 20, right: 10, bottom: 0, left: 10 }}
+                margin={{ top: 0, right: 0, bottom: 0, left: -20 }}
             >
                 <CartesianGrid
                     strokeDasharray="3 3"
@@ -80,17 +103,25 @@ export default function AnnualSummaryChart({ data }: { data: AnnualData[] }) {
                     }
                 />
 
-                <Legend verticalAlign="top" iconType="circle" />
+                <Legend
+                    verticalAlign="top"
+                    iconType="circle"
+                    onClick={handleLegendClick}
+                    formatter={renderLegendText}
+                    wrapperStyle={{ cursor: "pointer", userSelect: "none" }}
+                />
 
                 <Bar
                     dataKey="episodes"
                     fill="var(--color-episodes)"
                     radius={[5, 5, 0, 0]}
+                    hide={hiddenSeries.includes("episodes")}
                 />
                 <Bar
                     dataKey="hours"
                     fill="var(--color-hours)"
                     radius={[5, 5, 0, 0]}
+                    hide={hiddenSeries.includes("hours")}
                 />
             </BarChart>
         </ChartContainer>

@@ -23,7 +23,7 @@ export default function MobileNav({ links }: NavProps) {
         : "/" + pathSegments.slice(0, -1).join("/");
 
     return (
-        <div className="md:hidden fixed bottom-1 left-0 right-0 z-50 flex w-full justify-center mb-4 px-4 sm:px-6 lg:px-8">
+        <div className="md:hidden fixed bottom-1 left-0 right-0 z-50 flex w-full justify-center mb-4 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <nav className="pointer-events-auto relative flex flex-row justify-center items-center w-full">
                 <div className="absolute left-0">
                     {isSubPage && (
